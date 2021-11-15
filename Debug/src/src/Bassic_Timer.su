@@ -1,0 +1,4 @@
+Bassic_Timer.c:118:6:Basic_Timer_TIM6_INIT	4	static
+Bassic_Timer.c:156:6:Basic_Timer_TIM6_Update_Event	4	static
+Bassic_Timer.c:168:6:Basic_Timer_TIM6_Set_prescaler	16	static
+Bassic_Timer.c:182:6:Basic_Timer_TIM6_Auto_Reload_Set	16	static

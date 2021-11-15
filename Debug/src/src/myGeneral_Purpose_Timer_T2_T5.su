@@ -1,0 +1,4 @@
+myGeneral_Purpose_Timer_T2_T5.c:117:6:TIM6_UpCount_Config	4	static
+myGeneral_Purpose_Timer_T2_T5.c:142:6:TIM3_DownCount_Config	4	static
+myGeneral_Purpose_Timer_T2_T5.c:167:6:TIM4_UpDownCount_Config	4	static
+myGeneral_Purpose_Timer_T2_T5.c:195:6:TIM4_IRQ_Callback	8	static

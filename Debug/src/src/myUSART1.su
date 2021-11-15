@@ -1,0 +1,17 @@
+myUSART1.c:152:25:strCmp	32	static
+myUSART1.c:188:7:USART1_STR_Transmit	24	static
+myUSART1.c:218:8:strTransmit_with_DMA	16	static
+myUSART1.c:259:8:USART1_CHAR_Transmit	16	static
+myUSART1.c:284:9:strReceive	16	static
+myUSART1.c:343:10:USART1_CHAR_Receive	16	static
+myUSART1.c:442:6:myUSART1_Init	4	static
+myUSART1.c:567:6:myUSART1_GPIO_Config	24	static
+myUSART1.c:589:6:myUSART1_Enable	8	static
+myUSART1.c:634:6:USART1_TX_DMA_Config	4	static
+myUSART1.c:693:6:USART1_RX_DMA_Config	4	static
+myUSART1.c:764:6:USART1_IRQ_Callback	4	static
+myUSART1.c:832:6:myUSART1_Process	16	static
+myUSART1.c:1034:6:USART1_Process_with_DMA	16	static
+myUSART1.c:1227:7:USART1_RECIEVE_CallBack_function_Set	16	static
+myUSART1.c:1300:7:USART1_TX_DMA_IRQ_Callback	4	static
+myUSART1.c:1317:7:USART1_RX_DMA_IRQ_Callback	16	static

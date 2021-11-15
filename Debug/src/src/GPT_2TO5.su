@@ -1,0 +1,10 @@
+GPT_2TO5.c:122:6:GPT_Timer_3_Init	4	static
+GPT_2TO5.c:168:6:GPT_Timer_3_Enable	4	static
+GPT_2TO5.c:181:6:GPT_Timer_3_Set_Prescaler	16	static
+GPT_2TO5.c:196:6:GPT_Timer_3_Auto_Reload_Set	16	static
+GPT_2TO5.c:211:8:GPT_Timer_3_Get_counter	4	static
+GPT_2TO5.c:231:6:GPT_Timer_4_Init	4	static
+GPT_2TO5.c:277:6:GPT_Timer_4_Enable	4	static
+GPT_2TO5.c:290:6:GPT_Timer_4_Set_Prescaler	16	static
+GPT_2TO5.c:305:6:GPT_Timer_4_Auto_Reload_Set	16	static
+GPT_2TO5.c:320:8:GPT_Timer_4_Get_counter	4	static

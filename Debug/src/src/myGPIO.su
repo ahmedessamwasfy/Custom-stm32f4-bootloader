@@ -1,0 +1,7 @@
+myGPIO.c:116:6:GPIO_OUT_INIT	24	static
+myGPIO.c:212:6:GPIO_OUT_VALUE	24	static
+myGPIO.c:246:6:GPIO_IN_INIT	24	static
+myGPIO.c:283:4:GPIO_IN_value	24	static
+myGPIO.c:299:6:myGPIO_Init_LED	16	static
+myGPIO.c:392:6:myGPIO_TurnON_LED	16	static
+myGPIO.c:443:6:myGPIO_TurnOFF_LED	16	static

@@ -1,0 +1,4 @@
+myEXIT.c:116:6:EXTI_Init	24	static
+myEXIT.c:192:6:EXTI_SW_ENABLE	16	static
+myEXIT.c:205:6:EXTI_MUSKING	16	static
+myEXIT.c:216:6:EXTI_CLEAR_PENDING	16	static
