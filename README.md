@@ -35,27 +35,29 @@ Current custom bootloader targeting STM32F4291-discovery board.
 ## Memory design 
 <img src="imgs/stm32f4-memorymap.png" > <br>
 	*Figure 1. Memory map for Stm32f4.*
+
 `````````````
 	---------------------------------------
-	|		|           		  | 0x0800 0000H
+	|		|           		| 0x0800 0000H
 	|		|            		|   |
-	|    Bank 1		|     Bootloader  	|   |
+	|    Bank 1	|     Bootloader  	|   |
 	|		|     Sector1:Sector4  	|   V
 	|		|     128 K            	| 0x0801 FFFFH
 	---------------------------------------
 	|		|  			  | 0x080E 0000H
-	|		|      Image 1        |   |
+	|		|      Image 1          |   |
 	|    		|      Main image	|   |
 	|		|      Sector 11       	|   V
 	|		|      128 K          	| 0x080F FFFFH
-	|    Bank 2		------------------------
+	|    Bank 2	------------------------
 	|		|               	| 0x081E 0000H
 	|		|      Image 2        	|   |
 	|    		|      Secondary image	|   |
 	|		|      Sector 23       	|   V
 	|		|      128 K          	| 0x081F FFFFH
 	---------------------------------------
-````````````
+`````````````
+
 ##  Software design
 ### Bootloader manger
 Software starts with initializing hardware (Systick Timer, GPIO, Interrupts, Usart and DMA) then light the green red to tell the user to push the hardware button for 5 Seconds if he wants to enter bootloader mode , if user choose bootloader the green led is turned off and start the custom bootloader , if user didn’t push hardware button software starts to check wither Main image is available if true start to process booting sequence else check if the secondary image is available if true start booting sequence  for the secondary image , Finally if both images are in available then red led  will light up which is indecation for halt mode .
