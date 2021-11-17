@@ -93,7 +93,7 @@ Firstly it receive data trough UART which indicate the process nedded to be done
 	- Stop bits: 1
 - Or use flasher script in order to flash your image
 	```
-	Python flasher.py Com My_image.hex  
+	Python flasher.py Com10 My_image.hex  
 	```
 	<img src="imgs/flasher-script-operate.png" > <br>
 *Figure 4. flasher script result.*
