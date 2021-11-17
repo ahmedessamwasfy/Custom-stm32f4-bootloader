@@ -44,7 +44,7 @@ Current custom bootloader targeting STM32F4291-discovery board.
 	|		|     Sector1:Sector4  	|   V
 	|		|     128 K            	| 0x0801 FFFFH
 	---------------------------------------
-	|		|  			  | 0x080E 0000H
+	|		|  			| 0x080E 0000H
 	|		|      Image 1          |   |
 	|    		|      Main image	|   |
 	|		|      Sector 11       	|   V
