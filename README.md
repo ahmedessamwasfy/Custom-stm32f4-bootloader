@@ -37,15 +37,15 @@ Current custom bootloader targeting STM32F4291-discovery board.
 	*Figure 1. Memory map for Stm32f4.*
 `````````````
 	---------------------------------------
-	|		|           		    | 0x0800 0000H
-	|		|            			|   |
-	|    Bank 1		|     Bootloader  		|   |
+	|		|           		  | 0x0800 0000H
+	|		|            		|   |
+	|    Bank 1		|     Bootloader  	|   |
 	|		|     Sector1:Sector4  	|   V
 	|		|     128 K            	| 0x0801 FFFFH
 	---------------------------------------
-	|		|  						| 0x080E 0000H
-	|		|      Image 1      	|   |
-	|    		|      Main image	  	|   |
+	|		|  			  | 0x080E 0000H
+	|		|      Image 1        |   |
+	|    		|      Main image	|   |
 	|		|      Sector 11       	|   V
 	|		|      128 K          	| 0x080F FFFFH
 	|    Bank 2		------------------------
