@@ -17,6 +17,8 @@
 #include "gpio.h"
 #include "Flash_Hal.h"
 #include "EEprom_Emulation.h"
+#include "imageheader.h"
+#include "crc.h"
 
 //#include"myRCC.h"
 
