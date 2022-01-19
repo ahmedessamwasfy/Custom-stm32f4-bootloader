@@ -1,4 +1,4 @@
 core_cm4.h:1435:22:NVIC_SetPriorityGrouping	24	static
 core_cm4.h:1467:22:NVIC_EnableIRQ	16	static
 core_cm4.h:1550:22:NVIC_SetPriority	16	static
-nvic.c:115:6:NVIC_Init	8	static
+nvic.c:101:6:NVIC_Init	8	static

@@ -1,13 +1,13 @@
 /*******************************************************************************
  * @file    main.c
-  * @author  Ahmed Wasfy
+ * @author  Ahmed Wasfy
  * @email   ahmedessam0128@gmail.com
  * @date    10.04.2020
  *
  * @brief   main application called after startup
  * @note
  *
-*******************************************************************************/
+ *******************************************************************************/
 
 /* Includes */
 
@@ -16,6 +16,7 @@
 #include "SysTick.h"
 #include "gpio.h"
 #include "Flash_Hal.h"
+#include "EEprom_Emulation.h"
 
 //#include"myRCC.h"
 
@@ -37,31 +38,28 @@
 
 ///**
 //* @brief   USART1 current IRQ status
- //*/
-extern USART1_IRQStatusType currentIRQStatus ;
+//*/
+extern USART1_IRQStatusType currentIRQStatus;
 
-
- /* @brief   USART1 current state
+/* @brief   USART1 current state
  */
- extern USART1_StateType currentState ;
+extern USART1_StateType currentState;
 
- /**
-  * @brief   USART1 current error status
-  */
-  extern USART1_ErrorStatusType currentErrorStatus ;
-
+/**
+ * @brief   USART1 current error status
+ */
+extern USART1_ErrorStatusType currentErrorStatus;
 
 extern char RxChar;
 //
 extern char RX_FLAG;
 
 
-
 /*
  * @breif Result of the push button
  * */
 
-volatile u8  PushButton_Result;
+volatile u8 PushButton_Result;
 /**
  * @}
  */
@@ -74,8 +72,6 @@ volatile u8  PushButton_Result;
  * @brief   Buffer array size
  */
 #define BUFFER_SIZE     ((uint32) 500)
-
-//extern char RxDMABuffer[MAX_BUFFER_LENGTH];
 
 /**
  * @}
@@ -104,11 +100,6 @@ volatile u8  PushButton_Result;
  * @{
  */
 
-
-
-
-
-
 /**
  * @}
  */
@@ -117,7 +108,7 @@ volatile u8  PushButton_Result;
  * @defgroup main_private_function_prototypes
  * @{
  */
-		void USART1_Recive_IRQ_Callback(void);
+void USART1_Recive_IRQ_Callback(void);
 /**
  * @}
  */
@@ -142,99 +133,69 @@ volatile u8  PushButton_Result;
  * @param   none
  * @retval  none
  */
-int main(void)
-{
+int main(void) {
 
+	uint32_t Emulation_Eeprom_result = 0;
 
 	SysTick_Init();
-	  NVIC_Init();
-  //myGPIO_Init_LED(myEVAL_ALL_LEDs);
+	NVIC_Init();
+	/* Clear PRIMASK, enable IRQs */
+	__enable_irq();
+	Flash_USART1_GPIO_Config();
+	Flash_USART1_Init();
+	Flash_USART1_TX_DMA_Config();
+	Flash_USART1_RX_DMA_Config();
+	myUSART1_Enable();
+	Flash_Init();
+	SysTick_Init();
 
+	/*
+	 * init the push button and LEDs
+	 * */
+	GPIO_Init_LED(EVAL_ALL_LEDs);
+	GPIO_Init_PB();
+	GPIO_TurnON_LED(EVAL_GREEN_LED);
 
-	  /* Clear PRIMASK, enable IRQs */
-	  //__disable_irq();
-	  __enable_irq();
+	/* Delay for half second after initialization */
+	SysTick_Delay(3000);
 
+	/*
+	 * 1. check the push button if checked
+	 * */
+	PushButton_Result = GPIO_Result_PB();
 
+	/*
+	 * 2. if checked jump to flash main
+	 * */
 
-	  Flash_USART1_GPIO_Config();
-	  Flash_USART1_Init();
-	  Flash_USART1_TX_DMA_Config();
-	  Flash_USART1_RX_DMA_Config();
-	  myUSART1_Enable();
-//	  USART1_RECIEVE_CallBack_function_Set(USART1_Recive_IRQ_Callback);
+	if (1 == PushButton_Result) {
+		GPIO_TurnOFF_LED(EVAL_GREEN_LED);
 
+		Flash_Main();
+	} else {
 
-	  Flash_Init();
+		/*check using the eeprom emulation*/
 
-	  SysTick_Init();
-	  SysTick->CTRL  = SysTick_CTRL_CLKSOURCE_Msk |
-	                     SysTick_CTRL_TICKINT_Msk   |
-	                     SysTick_CTRL_ENABLE_Msk;                    /* Enable SysTick IRQ and SysTick Timer */
+		Emulation_Eeprom_result = EEpromEmulation_read_variable2();
+		/*
+		 * 3. if not checked check the validity of primary image if available boot it by calling jump function
+		 * */
+		if(Emulation_Eeprom_result>3||Emulation_Eeprom_result==0){
+			while(1);
+		}
+		Jump_To_APP(Emulation_Eeprom_result);
 
+	}
 
-	  /*
-	   * init the push button and LEDs
-	   * */
-	  GPIO_Init_LED(EVAL_ALL_LEDs);
-	  GPIO_Init_PB();
+	/* Infinite loop */
+	while (1)
+		;
 
-
-	  GPIO_TurnON_LED(EVAL_GREEN_LED);
-
-	  /* Delay for half second after initialization */
-	  SysTick_Delay(3000);
-
-
-	  /*
-	   * 1. check the push button if checked
-	   * */
-	  PushButton_Result= GPIO_Result_PB();
-
-	  /*
-	   * 2. if checked jump to flash main
-	   * */
-
-
-	  if (1==PushButton_Result){
-		    GPIO_TurnOFF_LED(EVAL_GREEN_LED);
-
-		    Flash_Main();
-	  }
-	  else{
-		  /*
-		   * 3. if not checked check the validity of primary image if available boot it by calling jump function
-		   * */
-		   if(OK==Main_IMG_Available()){
-
-			   Jump_To_Main_IMG();
-		   }
-		   /*
-		    * 4. else check the secondary and boot it
-		    * */
-		   else if(OK==Secondary_IMG_Available()){
-			   Jump_To_Secondary_IMG();
-		   }
-		   /*
-		    * 5. else go into halt mode with RED led ON
-		    * */
-		   else{
-			    GPIO_TurnON_LED(EVAL_RED_LED);
-			    while(1);
-		   }
-
-	  }
-
-	  /* Infinite loop */
-	  while(1);
-
-	  /*			things to do in flash.c
-	   * 1. replace the jump option with boot img1 and boot img2
-	   * 2. adding version to the boot-loader
-	   *
-	   * */
-
-
+	/*			things to do in flash.c
+	 * 1. replace the jump option with boot img1 and boot img2
+	 * 2. adding version to the boot-loader
+	 *
+	 * */
 
 }
 
@@ -248,30 +209,11 @@ int main(void)
  * @}
  */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-void USART1_Recive_IRQ_Callback(void)
-{
+void USART1_Recive_IRQ_Callback(void) {
 
 	//    /* Read character */
-		  RxChar = USART1_DR;
+	RxChar = USART1_DR;
 
-	    /* Set IRQ status */
-	    currentIRQStatus = USART1_CHAR_RECEIVED;
+	/* Set IRQ status */
+	currentIRQStatus = USART1_CHAR_RECEIVED;
 }

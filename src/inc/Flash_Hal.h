@@ -60,6 +60,9 @@ extern "C" {
 
 #include "DMA_Implement.h"
 #include "myUSART1.h"
+#include "ImageHeader.h"
+#include "crc.h"
+#include "EEprom_Emulation.h"
 
 
 /**
@@ -236,21 +239,32 @@ u8 Main_IMG_Available();
  */
 u8 Secondary_IMG_Available();
 
-/**
- * @brief  jump to main image
- * @note
- * @param   void
- * @retval  void
- */
-void Jump_To_Main_IMG ();
 
 /**
  * @brief
  * @note
  * @param   void
- * @retval  void
+ * @retval  uint32_t the image to be loaded
  */
-void Jump_To_Secondary_IMG();
+void Jump_To_APP(uint32_t image);
+
+
+/**
+ * @brief
+ * @note
+ * @param   void
+ * @retval  uint32_t the image to be valdated
+ */
+uint32_t CRC_validation(uint32_t image);
+
+/**
+ * @brief in case the crc is wrong we change the active image to the privious one
+ * @note
+ * @param   uint32 the current active image
+ * @retval 	the new active image
+ */
+uint32_t Change_Active_Image(uint32_t currentActiveImage);
+
 
 /**
  * @}

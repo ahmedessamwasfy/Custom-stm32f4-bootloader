@@ -1,0 +1,6 @@
+core_cm4.h:1816:22:__NVIC_SetPriority	16	static
+core_cm4.h:2022:26:SysTick_Config	16	static
+SysTick.c:106:6:SysTick_IncrementTicks_cb	4	static
+SysTick.c:117:10:SysTick_GetCurrentTick	4	static
+SysTick.c:128:6:SysTick_Delay	24	static
+SysTick.c:146:6:SysTick_Init	16	static

@@ -1,0 +1,6 @@
+EEprom_Emulation.c:90:6:EEpromEmulation_init	4	static
+EEprom_Emulation.c:125:13:EEpromEmulation_write_variable1	24	static
+EEprom_Emulation.c:138:13:EEpromEmulation_write_variable2	32	static
+EEprom_Emulation.c:221:13:EEpromEmulation_Erase_Sector	24	static
+EEprom_Emulation.c:295:8:EEpromEmulation_read_variable1	24	static
+EEprom_Emulation.c:311:8:EEpromEmulation_read_variable2	32	static
