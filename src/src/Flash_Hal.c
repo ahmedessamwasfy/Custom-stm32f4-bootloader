@@ -733,6 +733,12 @@ static void process_command() {
 			strTransmit_with_DMA(NACK, sizeof(NACK));
 		}
 		break;
+	case 11: /* update eeprom with new image */
+			command_address = *(u32*) &FlashRxBuffer[1];
+			command_data = *(u32*) command_address;/* the stack pointer*/
+			/* use eeprom emulation through flash to write the new version */
+			EEpromEmulation_write_variable2(command_data);
+		break;
 	default:
 		break;
 
