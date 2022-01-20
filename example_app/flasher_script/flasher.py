@@ -7,6 +7,8 @@ from intelhex import IntelHex
 ACK       = 0x41
 NACK      = 0x4E
 CMD_WRITE = 0x03
+CMD_VERSION_UPDATE = 0x0B
+
 
 class ProgramModeError(Exception):
     pass
@@ -61,7 +63,12 @@ class STM32Flasher(object):
                 resend = 0
             except (TimeoutError, ProgramModeError):
                 resend +=1
-
+	
+	data = []
+	data.append(content[addr])
+        self.serial.flushInput()                
+        self.serial.write([CMD_VERSION_UPDATE] + list(struct.pack("I", addr)) + list(data))
+        
         yield {"success": not abort}
 
 
